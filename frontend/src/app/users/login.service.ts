@@ -10,7 +10,8 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  apiUrl = 'http://localhost:3000';
+  // apiUrl = 'http://localhost:3000';
+  apiUrl = 'https://darma-association-mclr.onrender.com';
 
 
   // signup 
