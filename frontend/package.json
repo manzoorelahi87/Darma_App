@@ -10,7 +10,9 @@
   },
   "private": true,
   "dependencies": {
+	  "@angular-devkit/build-angular": "~15.2.0",
     "@angular/animations": "^15.2.0",
+	"@angular/cli": "15.2.0",
     "@angular/common": "^15.2.0",
     "@angular/compiler": "^15.2.0",
     "@angular/core": "^15.2.0",
@@ -20,6 +22,7 @@
     "@angular/router": "^15.2.0",
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@popperjs/core": "^2.11.6",
+	"@types/node": "^20.1.7"
     "angular-user-idle": "^4.0.0",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
@@ -31,7 +34,8 @@
     "popper.js": "^1.16.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.12.0"
+    "zone.js": "~0.12.0",
+	"typescript": "~5.0.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.4",
