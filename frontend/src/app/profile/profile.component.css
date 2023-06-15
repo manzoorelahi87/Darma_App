@@ -1,0 +1,42 @@
+label{
+    font-weight: 500;
+}
+
+.form-wrapper{
+    padding:10px;
+    border:1px solid grey;
+    border-radius: 5px;;
+}
+
+.right-align{
+    float:right;
+    margin-right:40px;
+    margin-top:10px;
+}
+
+#saveBtn{
+margin-right:3px;
+}
+
+#updateBtn{
+    margin-right:3px;
+}
+
+#resetBtn{
+    margin-right:3px;
+}
+
+.image-style{
+    width:150px
+}
+
+.container{
+    margin-top:80px;
+}
+
+.left-corner{
+    position: fixed;
+    left :0;
+    bottom:75px;
+    margin-left:10px
+}

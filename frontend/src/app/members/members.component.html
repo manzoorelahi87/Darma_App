@@ -1,0 +1,90 @@
+<div class="container mt-5">
+  <div *ngIf="isUserAdmin">
+    <h3 class="mb-3">Member Details</h3>
+    <hr />
+
+    <form [formGroup]="searchForm">
+      
+        <div class="alert alert-success  alert-dismissible left-corner" *ngIf="successMsgShow" role="alert">
+          {{successMsg}}
+          <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+            aria-label="Close"></button>
+        </div>
+        <div class="alert alert-danger  alert-dismissible left-corner" *ngIf="errMsgShow" role="alert">
+          {{errMsg}}
+          <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+            aria-label="Close"></button>
+        </div>
+      <div class="row">
+        <div class="col-lg-4 ml-2">
+          <input id="searchText" type="text" class="form-control" formControlName="searchText"
+            placeholder="Search by Name, Unit or Mobile Number" (change)="searchAllUsers()">
+        </div>      
+
+      </div>
+
+    </form>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Mobile No</th>
+          <th scope="col">Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="users?.length">
+        <tr *ngFor="let user of users | paginate : {
+              itemsPerPage: tableSize,
+              currentPage: page,
+              totalItems: count
+            };  let i = index">
+          <td>{{user.firstname}} {{user.lastname}}</td>
+          <td>{{user.unit}}</td>
+          <td>{{user.mobile}}</td>
+          <td>{{user.email}}</td>
+          <td> <a [routerLink]="['/profile',user.id]" *ngIf="userName !=='Admin'"
+              class="btn btn-sm btn-secondary">View</a> &nbsp;
+            <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)"
+              *ngIf="userName==='Admin'">Delete</button>&nbsp;
+            <a [routerLink]="['/profile',user.id]" class="btn btn-sm btn-secondary"
+              *ngIf="userName==='Admin'">Update</a>&nbsp;
+            <a (click)="resetPassword(user.email, user.mobile)" class="btn btn-sm btn-secondary"
+              *ngIf="userName==='Admin'">Reset Password</a>&nbsp;
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="users?.length === 0" style="text-align:center; font-weight: bold;">No records found</div>
+
+    <div class="d-flex justify-content-center">
+      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+      </pagination-controls>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

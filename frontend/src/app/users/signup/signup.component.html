@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <h3 class="mb-3">Register your Details</h3>
+  <hr />
+  <form [formGroup]="signupForm" (ngSubmit)="signupSubmit()">
+    <!-- errmsg show here -->
+    <div class="alert alert-success  alert-dismissible" *ngIf="successMsgShow" role="alert">
+      {{successMsg}}
+      <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+        aria-label="Close"></button>
+    </div>
+    <div class="alert alert-danger  alert-dismissible" *ngIf="errMsgShow" role="alert">
+      {{errMsg}}
+      <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+        aria-label="Close"></button>
+    </div>
+
+    <div class="mb-3">
+      <input type="text" class="form-control" formControlName="name" placeholder="Enter Your Name" />
+    </div>
+    <div class="mb-3">
+      <input type="phone" class="form-control" formControlName="phone" placeholder="Enter Your Mobile No (10 digits) - No country code required" />
+    </div>
+    <div class="mb-3">
+      <input type="email" class="form-control" formControlName="email" placeholder="Enter Your Email ID (optional)" />
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" formControlName="password" placeholder="Enter Your Password" />
+    </div>
+    <button type="submit" class="btn btn-primary">Signup</button>
+  </form>
+</div>

@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+
+.floatright {
+    float: left;
+}
+
+.floatleft {
+    float: right;
+}
+
+.container-top {
+    padding-top: 80px;   
+}
+
+footer{
+    text-align: center;   
+}
+
+.navbar-brand{
+    font-weight: 900;
+    font-size: 40px;
+    font-family:Lobster;
+    letter-spacing: 5px;
+}
+
+nav{
+    height: 80px;
+}
+.nav-item{    
+    padding: 15px;
+    font-size: medium;
+    font-weight: 500;
+}

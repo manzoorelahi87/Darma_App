@@ -1,0 +1,158 @@
+<div class="container mt-5">
+    <div class="button-wrapper">
+        <h3 *ngIf="!disableCreateButton"> Create Profile</h3>
+        <h3 *ngIf="!disableUpdateButton && !viewOnly"> Update Profile</h3>
+        <h3 *ngIf="viewOnly"> View Profile</h3>
+    </div>
+    <hr />
+    <br>
+
+    <button *ngIf="loader" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        Data Calling...
+    </button>
+
+    <div class="form-wrapper">
+        <form [formGroup]="profileForm">
+            <div class="alert alert-success  alert-dismissible left-corner" *ngIf="successMsgShow" role="alert">
+                {{successMsg}}
+                <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
+            <div class="alert alert-danger  alert-dismissible left-corner" *ngIf="errMsgShow" role="alert">
+                {{errMsg}}
+                <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
+            <div class="mb-3 right-align">
+                <small><em>All fields marked with * are mandatory</em></small>
+            </div>
+            <div *ngFor="let item of profileDetails; index" class="mb-3 right-align">
+                <span *ngIf="item.name === username"><img [src]="item.imageUrl"
+                        class="image-style"></span>
+            </div>
+            <!-- <ng-template #noImage>No image available</ng-template> -->
+            <div class="col-lg-6 mt-2">
+                <label for="firstName" class="form-label">First Name*</label>
+                <input id="firstName" type="text" class="form-control" formControlName="firstName"
+                    placeholder="First Name">
+            </div>
+            <div class="col-lg-6 mt-2">
+                <label for="lastName" class="form-label">Last Name*</label>
+                <input id="lastName" type="text" class="form-control" formControlName="lastName"
+                    placeholder="Last Name">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <label for="address" class="form-label">Address</label>
+                <textarea id="address" class="form-control" formControlName="address" style="height: 100px"
+                    placeholder="Address Details"></textarea>
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <label for="associationUnit" class="form-label">Association*</label>
+                <select id="associationUnit" class="form-select" aria-label="Default select example"
+                    formControlName="associationUnit">
+                    <option value="">Select Unit</option>
+                    <option value="Kochi">Kochi</option>
+                    <option value="Trivandrum">Trivandrum</option>
+                    <option value="Calicut">Calicut</option>
+                    <option value="Thrissur">Thrissur</option>
+                </select>
+
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <label for="mobileNumber" class="form-label">Primary Mobile No:*</label>
+                <input id="mobileNumber" type="text" class="form-control" formControlName="mobileNo"
+                    placeholder="+91-999999999">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <label for="mobileNumber" class="form-label">Secondary Mobile No:</label>
+                <input id="mobileNumber" type="text" class="form-control" formControlName="smobileNo"
+                    placeholder="+91-999999999">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <div class="row">
+
+                    <label for="stdCode" class="form-label">STD code</label>
+                    <div class="col-lg-6">
+                        <input id="stdCode" type="text" class="form-control" formControlName="landlineCode"
+                            placeholder="STD code">
+                    </div>
+                    <div class="col-lg-6">
+                        <input id="landlineNumber" type="text" class="form-control" formControlName="landlineNo"
+                            placeholder="Landline number">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" type="email" class="form-control" formControlName="email" placeholder="abc@gmail.com">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <label for="dateofBirth" class="form-label">Date of Birth</label>
+                <div id="dateofBirth" class="input-group">
+                    <input class="form-control" placeholder="YYYY-MM-DD" formControlName="dateOfBirth"
+                        [maxDate]="maxDate" [minDate]="{year: 1900, month: 1, day: 1}" ngbDatepicker
+                        #d="ngbDatepicker" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"><i
+                            class="fa fa-calendar" style="color:rgb(13, 13, 14);"></i></button>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <label for="spouseName" class="form-label">Spouse Name</label>
+                <input id="spouseName" type="text" class="form-control" formControlName="spouseName"
+                    placeholder="Spouse Name">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <label for="spouseDOB" class="form-label">Spouse DOB</label>
+                <div id="spouseDOB" class="input-group">
+                    <input type="text" class="form-control" placeholder="YYYY-MM-DD" formControlName="spouseDOB"
+                        [maxDate]="maxDate" [minDate]="{year: 1900, month: 1, day: 1}" ngbDatepicker
+                        #e="ngbDatepicker" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="e.toggle()" type="button"><i
+                            class="fa fa-calendar" style="color:rgb(13, 13, 14);"></i></button>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <div class="row">
+                    <label for="maleChildren" class="form-label">No: of children</label>
+                    <div class="col-lg-6">
+                        <input id="maleChildren" type="number" class="form-control" formControlName="maleChildren"
+                            placeholder="Male">
+                    </div>
+                    <div class="col-lg-6">
+                        <input id="femaleChildren" type="number" class="form-control" formControlName="femaleChildren"
+                            placeholder="Female">
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="col-lg-6 mt-2">
+                <label for="remarks" class="form-label">Remarks</label>
+                <textarea id="remarks" class="form-control" formControlName="notes" style="height: 100px"
+                    placeholder="Remarks if any"></textarea>
+            </div>
+
+            <div class="col-lg-6 mt-3" *ngIf="!viewOnly">
+                <button class="btn btn-sm btn-primary" id="saveBtn" *ngIf="!disableCreateButton"
+                    (click)="createUser()">Save</button>
+                <button class="btn btn-sm btn-primary" id="updateBtn" *ngIf="!disableUpdateButton"
+                    (click)="updateUserProfile()">Update</button>
+                <button class="btn btn-sm btn-info" id="resetBtn" (click)="resetProfile()">Reset</button>
+            </div>
+        </form>
+    </div>
+
+</div>

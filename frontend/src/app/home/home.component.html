@@ -1,0 +1,84 @@
+<div class="container">
+
+    <div class="alert alert-info">
+        <strong>Info!</strong> {{notificationMessage}}
+    </div>
+
+
+    <div class="titleWrapper">
+
+        <h2> Darma - DUBAI AIRPORT RETURNEES MALAYALEE ASSOCIATION</h2>
+        <hr />
+        <p class="indent">{{homeContent}}</p>
+        
+    </div>
+    <br>
+    <div class="assoc">
+        <h3> Board of Directors</h3>
+        <hr />
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" *ngFor="let item of boardMembers">
+                <div class="card">
+                    <img [src]="item.imageUrl" class="card-img-top board" alt="BoardMembers"
+                        referrerpolicy="no-referrer">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{item.designation}}</h5>
+                        <div class="card-text text-center">
+                            <p class="text-center">{{item.name}}</p>
+                            <p class="text-center">{{item.contact}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h5> Committee Members</h5>
+        <hr />
+        <div style="width: 100%; height: 250px; text-align:center;margin:0; padding:0;">
+            <ng-image-slider #nav [images]="imageObject1" [infinite]="false" [autoSlide]="1"
+                [imageSize]="{width: '18%', height: 200}" slideImage="1"></ng-image-slider>
+        </div>
+    </div>
+    <br>
+    <div class="pics">
+        <h3> Events and Activities</h3>
+        <hr />
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" *ngFor="let item of homePhotoUrls">
+                    <img [src]="item.photoUrl" class="d-block w-100" alt="Event Images" referrerpolicy="no-referrer">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{item.label}}</h5>
+                        <p>{{item.description}}</p>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <br>
+
+    <div style="width: 100%; height: 250px; text-align:center;margin:0; padding:0;">
+        <ng-image-slider #nav [images]="imageObject" [infinite]="false" [autoSlide]="1"
+            [imageSize]="{width: '25%', height: 200}" slideImage="1"></ng-image-slider>
+    </div>
+
+</div>

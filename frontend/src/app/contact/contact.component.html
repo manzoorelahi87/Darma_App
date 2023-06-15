@@ -1,0 +1,39 @@
+<div class="container mt-5">
+  <h3 class="mb-3">Contact Us</h3>
+  <hr />
+
+  <div class="alert alert-success  alert-dismissible" *ngIf="successMsgShow" role="alert">
+    {{successMsg}}
+    <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div class="alert alert-danger  alert-dismissible" *ngIf="errMsgShow" role="alert">
+    {{errMsg}}
+    <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <form [formGroup]="contactForm" (ngSubmit)="contactSubmit()">
+    <!-- errmsg show here -->
+    <!-- <div *ngIf="errsgshow">
+          <p class="text-danger">{{ errmsg }}</p>
+        </div> -->
+
+    <div class="mb-3">
+      <input type="text" class="form-control" formControlName="name" placeholder="Enter Your Name" />
+    </div>
+
+    <div class="mb-3">
+      <input type="email" class="form-control" formControlName="email" placeholder="Enter Your Email ID" />
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" formControlName="contact" placeholder="Contact Details" />
+    </div>
+    <div class="mb-3">
+      <textarea id="message" class="form-control" formControlName="message" style="height: 100px"
+        placeholder="Enter Your Message"></textarea>
+    </div>
+    <div>
+      <small class="right-text">All fields are mandatory*</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
