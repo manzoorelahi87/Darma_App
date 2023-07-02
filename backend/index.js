@@ -22,11 +22,19 @@ app.use(bodyparser.json());
 //   port: 3306
 // });
 
+// const db = mysql.createConnection({
+//   host: 'sql12.freesqldatabase.com',
+//   user: 'sql12626408',
+//   password: 'v4bNrbZeaH',
+//   database: 'sql12626408',
+//   port: 3306
+// });
+
 const db = mysql.createConnection({
-  host: 'sql12.freesqldatabase.com',
-  user: 'sql12626408',
-  password: 'v4bNrbZeaH',
-  database: 'sql12626408',
+  host: 'database-1.cci0uk25xtmw.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'admin123',
+  database: 'darma',
   port: 3306
 });
 
