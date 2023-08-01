@@ -27,9 +27,9 @@
             <div class="mb-3 right-align">
                 <small><em>All fields marked with * are mandatory</em></small>
             </div>
-            <div *ngFor="let item of profileDetails; index" class="mb-3 right-align">
+            <div *ngFor="let item of profileDetails; index" class="">
                 <span *ngIf="item.name === username"><img [src]="item.imageUrl"
-                        class="image-style"></span>
+                        class="mb-3 right-align image-style"></span>
             </div>
             <!-- <ng-template #noImage>No image available</ng-template> -->
             <div class="col-lg-6 mt-2">
