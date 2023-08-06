@@ -14,13 +14,13 @@ app.use(bodyparser.json());
 //****************** DATABASE ************************************************************************ */
 
 //database connection
-// const db = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'simpledb',
-//   port: 3306
-// });
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'simpledb',
+  port: 3306
+});
 
 // const db = mysql.createConnection({
 //   host: 'sql12.freesqldatabase.com',
@@ -30,13 +30,13 @@ app.use(bodyparser.json());
 //   port: 3306
 // });
 
-const db = mysql.createConnection({
-  host: 'database-1.cci0uk25xtmw.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'admin123#',
-  database: 'darma',
-  port: 3306
-});
+// const db = mysql.createConnection({
+//   host: 'database-1.cci0uk25xtmw.us-east-1.rds.amazonaws.com',
+//   user: 'admin',
+//   password: 'admin123#',
+//   database: 'darma',
+//   port: 3306
+// });
 
 
 //Check database connection
@@ -176,6 +176,7 @@ app.post('/profile', (req, res) => {
   let lastName = req.body.lastName;
   let address = req.body.address;
   let associationUnit = req.body.associationUnit;
+  let department = req.body.department;
   let mobileNo = req.body.mobileNo;
   let smobileNo = req.body.smobileNo;
   let landlineCode = req.body.landlineCode;
@@ -188,8 +189,8 @@ app.post('/profile', (req, res) => {
   let femaleChildren = req.body.femaleChildren;
   let notes = req.body.notes;
 
-  let insert_qr = `insert into members (firstname, lastname, address, unit, mobile, smobile, landcode, landline, email, dob, spouse, sdob, male, female, notes) values ('${firstName}', '${lastName}', '${address}',
-    '${associationUnit}', '${mobileNo}', '${smobileNo}', '${landlineCode}', '${landlineNo}', '${email}', '${dateOfBirth}', '${spouseName}', '${spouseDOB}', '${maleChildren}',
+  let insert_qr = `insert into members (firstname, lastname, address, unit, department, mobile, smobile, landcode, landline, email, dob, spouse, sdob, male, female, notes) values ('${firstName}', '${lastName}', '${address}',
+    '${associationUnit}', '${department}', '${mobileNo}', '${smobileNo}', '${landlineCode}', '${landlineNo}', '${email}', '${dateOfBirth}', '${spouseName}', '${spouseDOB}', '${maleChildren}',
     '${femaleChildren}', '${notes}')`;
 
   db.query(insert_qr, (err, result) => {
@@ -216,6 +217,7 @@ app.put('/profile/:id', (req, res) => {
   let lastName = req.body.lastName;
   let address = req.body.address;
   let associationUnit = req.body.associationUnit;
+  let department = req.body.department;
   let mobileNo = req.body.mobileNo;
   let smobileNo = req.body.smobileNo;
   let landlineCode = req.body.landlineCode;
@@ -229,7 +231,7 @@ app.put('/profile/:id', (req, res) => {
   let notes = req.body.notes;
 
   console.log("Update members");
-  let update_qr = `update members set firstname = '${firstName}', lastname = '${lastName}', address = '${address}',    unit = '${associationUnit}', mobile = '${mobileNo}', smobile = '${smobileNo}', landcode = '${landlineCode}', landline = '${landlineNo}', email = '${email}', dob = '${dateOfBirth}',  spouse = '${spouseName}', sdob = '${spouseDOB}', male = '${maleChildren}', female = '${femaleChildren}', notes = '${notes}' where id =${gID}`;
+  let update_qr = `update members set firstname = '${firstName}', lastname = '${lastName}', address = '${address}',    unit = '${associationUnit}', department = '${department}', mobile = '${mobileNo}', smobile = '${smobileNo}', landcode = '${landlineCode}', landline = '${landlineNo}', email = '${email}', dob = '${dateOfBirth}',  spouse = '${spouseName}', sdob = '${spouseDOB}', male = '${maleChildren}', female = '${femaleChildren}', notes = '${notes}' where id =${gID}`;
 
   db.query(update_qr, (err, result) => {
 
