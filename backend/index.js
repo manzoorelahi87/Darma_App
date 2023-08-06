@@ -14,13 +14,13 @@ app.use(bodyparser.json());
 //****************** DATABASE ************************************************************************ */
 
 //database connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'simpledb',
-  port: 3306
-});
+// const db = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'simpledb',
+//   port: 3306
+// });
 
 // const db = mysql.createConnection({
 //   host: 'sql12.freesqldatabase.com',
@@ -30,13 +30,13 @@ const db = mysql.createConnection({
 //   port: 3306
 // });
 
-// const db = mysql.createConnection({
-//   host: 'database-1.cci0uk25xtmw.us-east-1.rds.amazonaws.com',
-//   user: 'admin',
-//   password: 'admin123#',
-//   database: 'darma',
-//   port: 3306
-// });
+const db = mysql.createConnection({
+  host: 'database-1.cci0uk25xtmw.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'admin123#',
+  database: 'darma',
+  port: 3306
+});
 
 
 //Check database connection
