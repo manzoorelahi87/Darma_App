@@ -14,13 +14,13 @@ app.use(bodyparser.json());
 //****************** DATABASE ************************************************************************ */
 
 //database connection
-// const db = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'simpledb',
-//   port: 3306
-// });
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'simpledb',
+  port: 3306
+});
 
 // const db = mysql.createConnection({
 //   host: 'sql12.freesqldatabase.com',
@@ -30,13 +30,13 @@ app.use(bodyparser.json());
 //   port: 3306
 // });
 
-const db = mysql.createConnection({
-  host: 'database-1.cci0uk25xtmw.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'admin123#',
-  database: 'darma',
-  port: 3306
-});
+// const db = mysql.createConnection({
+//   host: 'database-1.cci0uk25xtmw.us-east-1.rds.amazonaws.com',
+//   user: 'admin',
+//   password: 'admin123#',
+//   database: 'darma',
+//   port: 3306
+// });
 
 
 //Check database connection
@@ -201,6 +201,34 @@ app.post('/profile', (req, res) => {
 
     res.send({
       message: 'User details inserted'
+    })
+
+  });
+
+});
+
+
+
+//Insert into members table basic data
+app.post('/basicProfile', (req, res) => {
+  console.log("Create members");
+
+  let firstName = req.body.firstname;  
+  let mobileNo = req.body.mobile;  
+  let email = req.body.email;
+  
+
+  let insert_qr = `insert into members ( firstname, mobile, email) values (
+    '${firstName}','${mobileNo}', '${email}' )`;
+
+  db.query(insert_qr, (err, result) => {
+
+    if (err) {
+      console.log(err, 'err')
+    }
+
+    res.send({
+      message: 'Basic User details inserted'
     })
 
   });
@@ -540,14 +568,28 @@ app.post("/signup", (req, res) => {
           decryptpwd = await bcrypt.hash(password, 10);
           // insert into users table
           let insertqry = `insert into users(name,phone,email,password) values('${name}','${phone}','${email}','${decryptpwd}') `;
-
+          // let insert_qr = `insert into members ( mobile, email) values ('${phone}','${email}' )`;
+          
           db.query(insertqry, (err, result) => {
             if (err) throw err;
             res.send({
               status: true,
               msg: "User Registered Successfully",
-            });
+            });  
           });
+
+           // Insert into member table              
+
+          // db.query(insert_qr, (err, result) => {
+
+          //   if (err) {
+          //     console.log(err, 'err')
+          //   }
+
+          //   res.send({
+          //     message: 'User details inserted'
+          //   });
+          // });
         }
       });
     }
