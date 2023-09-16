@@ -13,7 +13,7 @@ app.use(bodyparser.json());
 
 //****************** DATABASE ************************************************************************ */
 
-// //database connection
+//database connection
 // const db = mysql.createConnection({
 //   host: 'localhost',
 //   user: 'root',
@@ -22,13 +22,6 @@ app.use(bodyparser.json());
 //   port: 3306
 // });
 
-// const db = mysql.createConnection({
-//   host: 'sql12.freesqldatabase.com',
-//   user: 'sql12626408',
-//   password: 'v4bNrbZeaH',
-//   database: 'sql12626408',
-//   port: 3306
-// });
 
 const db = mysql.createConnection({
   host: 'database-1.cci0uk25xtmw.us-east-1.rds.amazonaws.com',
@@ -42,13 +35,13 @@ const db = mysql.createConnection({
 //Check database connection
 db.connect(err => {
   if (err) {
-    console.log(err, 'DB Error');
+    console.log(err, 'DB Error, cannot connect');
   }
   console.log('Database connected');
 });
 
 app.listen(3000, () => {
-  console.log('Server running on port 3000');
+  console.log('Server running on port 3000 while running in local');
 });
 
 //****************** DATABASE ************************************************************************ */
@@ -62,8 +55,7 @@ app.listen(3000, () => {
 
 //Get All data
 app.get('/members', (req, res) => {
-
-  console.log("Fetch all user data");
+  console.log("Fetch all users data, members page");
   let select_qr = `select * from members`;
   db.query(select_qr, (err, result) => {
 
@@ -85,7 +77,7 @@ app.get('/members', (req, res) => {
 app.post('/members/search', (req, res) => {
   let eMail = req.body.email;
 
-  console.log("Fetch specific user data");
+  console.log("Search user based on email:", eMail);
   let single_user_qr = `select id from members where email = '${eMail}'`;
   db.query(single_user_qr, (err, result) => {
 
@@ -113,17 +105,13 @@ app.post('/members/search', (req, res) => {
 //Get user data based on unit, mobile, firstname or last name (Search feature)
 app.post('/members/searchAll', (req, res) => {
   let searchText = req.body.searchText;
-
-  console.log("Search based on the search text");
+  console.log("Search user data based on the search text:", searchText);
   let search_qr = `select * from members where unit = '${searchText}' OR mobile LIKE '%${searchText}%' OR firstname LIKE '%${searchText}%' OR lastname LIKE '%${searchText}%' `;
-  // console.log(search_qr);
   db.query(search_qr, (err, result) => {
 
     if (err) {
       console.log(err, 'err')
-    }
-
-    // console.log(result, "#result")
+    }   
     if (result.length > 0) {
       res.send({
         message: 'Searched data fetched sucessfully',
@@ -132,7 +120,7 @@ app.post('/members/searchAll', (req, res) => {
     }
     else {
       res.send({
-        message: 'No data found',
+        message: 'No data found for the searched text',
       });
     }
 
@@ -145,7 +133,7 @@ app.get('/profile/:id', (req, res) => {
   let gID = req.params.id;
   let id_qr = `select * from members where id = ${gID}`;
 
-  console.log("Search user based on his ID");
+  console.log("Search user based on his ID:", gID);
   db.query(id_qr, (err, result) => {
 
     if (err) {
@@ -170,7 +158,7 @@ app.get('/profile/:id', (req, res) => {
 
 //Insert into members table
 app.post('/profile', (req, res) => {
-  console.log("Create members");
+ 
 
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
@@ -189,6 +177,8 @@ app.post('/profile', (req, res) => {
   let femaleChildren = req.body.femaleChildren;
   let notes = req.body.notes;
 
+  console.log("Create members:", firstName, lastName);
+
   let insert_qr = `insert into members (firstname, lastname, address, unit, department, mobile, smobile, landcode, landline, email, dob, spouse, sdob, male, female, notes) values ('${firstName}', '${lastName}', '${address}',
     '${associationUnit}', '${department}', '${mobileNo}', '${smobileNo}', '${landlineCode}', '${landlineNo}', '${email}', '${dateOfBirth}', '${spouseName}', '${spouseDOB}', '${maleChildren}',
     '${femaleChildren}', '${notes}')`;
@@ -198,7 +188,6 @@ app.post('/profile', (req, res) => {
     if (err) {
       console.log(err, 'err')
     }
-
     res.send({
       message: 'User details inserted'
     })
@@ -211,12 +200,12 @@ app.post('/profile', (req, res) => {
 
 //Insert into members table basic data
 app.post('/basicProfile', (req, res) => {
-  console.log("Create members");
-
+  
   let firstName = req.body.firstname;  
   let mobileNo = req.body.mobile;  
   let email = req.body.email;
   
+  console.log("Create members with basic details:", firstName, mobileNo, email);
 
   let insert_qr = `insert into members ( firstname, mobile, email) values (
     '${firstName}','${mobileNo}', '${email}' )`;
@@ -228,7 +217,7 @@ app.post('/basicProfile', (req, res) => {
     }
 
     res.send({
-      message: 'Basic User details inserted'
+      message: 'Basic Member details inserted'
     })
 
   });
@@ -258,7 +247,7 @@ app.put('/profile/:id', (req, res) => {
   let femaleChildren = req.body.femaleChildren;
   let notes = req.body.notes;
 
-  console.log("Update members");
+  console.log("Update member based on his ID", gID, firstName, lastName);
   let update_qr = `update members set firstname = '${firstName}', lastname = '${lastName}', address = '${address}',    unit = '${associationUnit}', department = '${department}', mobile = '${mobileNo}', smobile = '${smobileNo}', landcode = '${landlineCode}', landline = '${landlineNo}', email = '${email}', dob = '${dateOfBirth}',  spouse = '${spouseName}', sdob = '${spouseDOB}', male = '${maleChildren}', female = '${femaleChildren}', notes = '${notes}' where id =${gID}`;
 
   db.query(update_qr, (err, result) => {
@@ -289,20 +278,18 @@ app.delete('/profile/:id', (req, res) => {
     if (err) {
       console.log(err, 'err')
     }
-    console.log(result);
+    // console.log(result);
     let data = result;
 
     let qr = `delete from members where id = '${qID}'`;
 
-    console.log("Delete member data");
+    console.log("Delete member data:", qID, data[0].mobile);
     db.query(qr, (err, result) => {
 
       if (err) {
         console.log(err, 'err')
       }
       else {
-
-        console.log(data[0].mobile);
         // Delete from users table.
         let qr = `delete from users where phone = '${data[0].mobile}'`;
         db.query(qr, (err, result) => {
@@ -341,23 +328,26 @@ app.post('/login', (req, res) => {
 
   let email = req.body.email;
   let password = req.body.password;
-
+  console.log("User tries to login with email/phone: ", email);
   // checkemailid
   let chkemailid = `select * from users where email = '${email}' OR phone = '${email}'`;
   db.query(chkemailid, async (err, result) => {
     if (err) throw err;
-    console.log(result, "#result");
+    // console.log(result, "#result");
+    
     if (result.length > 0) {
       let data = {
         name: result[0].name,
         email: result[0].email,
       };
+      console.log("User details present, checking for password");
       //    check password
       let chkpwd = await bcrypt.compare(password, result[0].password);
-      console.log(chkpwd, "chkpwd##");
+      // console.log(chkpwd, "chkpwd##");
       if (chkpwd === true) {
+        console.log("Password correct, User logged in successfully");
         const token = jwt.sign({ data }, "privatkey");
-        console.log(token, "token##");
+        // console.log(token, "token##");
         res.send({
           status: true,
           token: token,
@@ -386,11 +376,12 @@ app.put("/reset-password", (req, res) => {
   let password = req.body.password;
   let newpassword = req.body.newpassword;
 
+  console.log("User updating the password for user with email:", email);
   //Validate the old password
   let chk_email_mob_query = `select * from users where email = '${email}' || phone = '${email}'`;
   db.query(chk_email_mob_query, async (err, result) => {
     if (err) throw err;
-    console.log(result, "#result");
+    // console.log(result, "#result");
     if (result.length > 0) {
       let data = {
         name: result[0].name,
@@ -400,20 +391,20 @@ app.put("/reset-password", (req, res) => {
 
       //    check password
       let chkpwd = await bcrypt.compare(password, result[0].password);
-      console.log(chkpwd, "chkpwd##");
+      // console.log(chkpwd, "chkpwd##");
 
       if (chkpwd === true) {
         const token = jwt.sign({ data }, "privatkey");
-        console.log(token, "token##");
+        // console.log(token, "token##");
 
         // Insert new password
         // password decrypt
         decryptpwd = await bcrypt.hash(newpassword, 10);
 
         // insert data
-        console.log("Update into users")
+        // console.log("Update password to users")
         let updateqry = `update users set password = '${decryptpwd}' where phone ='${result[0].phone}' `;
-        console.log(updateqry);
+        // console.log(updateqry);
         db.query(updateqry, (err, result) => {
           if (err) throw err;
           res.send({
@@ -450,7 +441,7 @@ app.put("/reset", (req, res) => {
 
   // first check email id already exit
   let namechkqry = `select * from users where email = '${email}' || phone ='${phone}' `;
-  console.log(namechkqry);
+  console.log("Admin resetting password for email and phone:", email, phone);
   db.query(namechkqry, async (err, result) => {
 
     if (err) throw err;
@@ -461,7 +452,7 @@ app.put("/reset", (req, res) => {
       // update users data
       console.log("Update users with default password");
       let updateqry = `update users set password = '${decryptpwd}' where phone ='${phone}' `;
-      console.log(updateqry);
+      // console.log(updateqry);
       db.query(updateqry, (err, result) => {
         if (err) throw err;
         res.send({
@@ -539,7 +530,7 @@ app.post("/signup", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   // check if the mobile no exists
-  console.log("Insert users");
+  console.log("Signup - Insert users:", name, phone, email);
   let mobchkqry = `select phone from users where phone LIKE '%${phone}%' `;
   // console.log(mobchkqry);
   db.query(mobchkqry, async (err, result) => {
@@ -625,7 +616,7 @@ app.post("/users/searchAll", (req, res) => {
   const email = req.body.email;
   // check if the mobile no exists
   let userschkqry = `select phone, email from users where phone LIKE '%${phone}%' OR email = '${email}'`;
-  console.log("Search user based on phone and email");
+  console.log("Search user based on phone and email:", phone, email);
   db.query(userschkqry, async (err, result) => {
     if (err) throw err;
     // check mobile no already exits
@@ -670,7 +661,7 @@ app.put("/users/updateUser", (req, res) => {
 // requiredtoken
 function requiredtoken(req, res, next) {
   let headers = req.headers["token"];
-  console.log(headers, "token##");
+  // console.log(headers, "token##");
   if (typeof headers !== undefined && headers !== "") {
     req.token = headers;
     next();
