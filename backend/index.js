@@ -179,21 +179,39 @@ app.post('/profile', (req, res) => {
 
   console.log("Create members:", firstName, lastName);
 
-  let insert_qr = `insert into members (firstname, lastname, address, unit, department, mobile, smobile, landcode, landline, email, dob, spouse, sdob, male, female, notes) values ('${firstName}', '${lastName}', '${address}',
+
+ 
+  console.log("User tries to search for phone: ", mobileNo);
+  // checkemailid
+  let chkmobile = `select * from members where mobile = '${mobileNo}'`;
+  db.query(chkmobile, async (err, result) => {
+    if (err) throw err;
+  
+    if (result.length > 0) {
+      res.send({
+        status: false,
+        msg: "User already exists",
+      });
+    }
+    else {
+
+      let insert_qr = `insert into members (firstname, lastname, address, unit, department, mobile, smobile, landcode, landline, email, dob, spouse, sdob, male, female, notes) values ('${firstName}', '${lastName}', '${address}',
     '${associationUnit}', '${department}', '${mobileNo}', '${smobileNo}', '${landlineCode}', '${landlineNo}', '${email}', '${dateOfBirth}', '${spouseName}', '${spouseDOB}', '${maleChildren}',
     '${femaleChildren}', '${notes}')`;
 
-  db.query(insert_qr, (err, result) => {
+      db.query(insert_qr, (err, result) => {
 
-    if (err) {
-      console.log(err, 'err')
+        if (err) {
+          console.log(err, 'err')
+        }
+        res.send({
+          message: 'User details inserted'
+        })
+
+      });
     }
-    res.send({
-      message: 'User details inserted'
-    })
 
   });
-
 });
 
 
